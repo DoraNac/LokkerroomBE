@@ -2,19 +2,20 @@ const express = require("express");
 const { Pool } = require("pg");
 const jwt = require("jsonwebtoken");
 const { verify } = require("jsonwebtoken");
+const dotenv = require('dotenv').config()
 
 const app = express();
 const port = 3000;
 
 app.use(express.json());
 
-// const pool = new Pool({
-//   user: "postgres",
-//   host: "localhost",
-//   database: "sports_club_platform",
-//   password: "mjaumjau",
-//   port: 5432,
-// });
+const pool = new Pool({
+  user: "postgres",
+  host: "localhost",
+  database: "sports_club_platform",
+  password: "mjaumjau",
+  port: 5432,
+});
 
 const jwtSecret = "your-secret-key";
 
@@ -126,6 +127,7 @@ app.post("/api/lobby", async (req, res) => {
   }
 });
 
-app.listen(3000), () => {
-  console.log(`Server is running on port 3000`);
-};
+
+app.listen( process.env.PORT || 3000, () => {
+  console.log(`Example app listening on port ${port}`)
+})
