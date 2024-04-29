@@ -7,6 +7,6 @@
     "pg": "^8.11.5"
   },
   "scripts": {
-    "start": "node sportsPlatform.js"
+    "start": "node index.js"
   }
 }
