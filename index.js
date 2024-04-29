@@ -10,11 +10,11 @@ const port = 3000;
 app.use(express.json());
 
 const pool = new Pool({
-  user: "postgres",
-  host: "localhost",
-  database: "sports_club_platform",
-  password: "mjaumjau",
-  port: 5432,
+  connectionString:process.env.DATABASE_URL,
+  ssl : {
+    rejectUnauthorized : false,
+  }
+ 
 });
 
 const jwtSecret = "your-secret-key";
