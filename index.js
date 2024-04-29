@@ -77,26 +77,26 @@ app.post("/api/login", async (req, res) => {
   }
 });
 
-// app.use(async (req, res, next) => {
-//   console.log("Middleware called");
-//   if (!req.headers.authorization) return res.status(401).send("Unauthorized");
+app.use(async (req, res, next) => {
+  console.log("Middleware called");
+  if (!req.headers.authorization) return res.status(401).send("Unauthorized");
 
-//   try {
-//     const decoded = await verify(
-//       req.headers.authorization.split(" ")[1],
-//       jwtSecret
-//     );
+  try {
+    const decoded = await verify(
+      req.headers.authorization.split(" ")[1],
+      jwtSecret
+    );
 
-//     if (decoded !== undefined) {
-//       req.user = decoded;
-//       return next();
-//     }
-//   } catch (err) {
-//     console.log(err);
-//   }
+    if (decoded !== undefined) {
+      req.user = decoded;
+      return next();
+    }
+  } catch (err) {
+    console.log(err);
+  }
 
-//   return res.status(403).send("Invalid token");
-// });
+  return res.status(403).send("Invalid token");
+});
 
 app.post("/api/lobby", async (req, res) => {
   try {
