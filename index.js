@@ -3,21 +3,21 @@ const { Pool } = require("pg");
 const jwt = require("jsonwebtoken");
 const { verify } = require("jsonwebtoken");
 const dotenv = require('dotenv').config()
+const cors = require('cors');
 
 const app = express();
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 app.use(express.json());
 
 const pool = new Pool({
-  connectionString:process.env.DATABASE_URL,
-  ssl : {
-    rejectUnauthorized : false,
+  connectionString: process.env.DATABASE_URL,
+  ssl: {
+    rejectUnauthorized: false,
   }
- 
 });
 
-const jwtSecret = "your-secret-key";
+const jwtSecret = process.env.JWT_SECRET;
 
 function generateToken(users) {
   const payload = {
@@ -25,13 +25,13 @@ function generateToken(users) {
     email: users.email,
   };
 
-  const token = jwt.sign(payload, "your-secret-key", { expiresIn: "2h" });
+  const token = jwt.sign(payload, jwtSecret, { expiresIn: "2h" });
 
   return token;
 }
-app.get("/", (req, res) => {
-  res.send("helooo");
-});
+
+
+
 app.post("/api/register", async (req, res) => {
   try {
     const { email, password } = req.body;
